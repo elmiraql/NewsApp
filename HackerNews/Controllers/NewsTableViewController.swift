@@ -27,6 +27,7 @@ class NewsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = "\(news[indexPath.row].points) \(news[indexPath.row].title)"
         cell.textLabel?.font = UIFont(name: "Courier", size: 20)
+        cell.textLabel?.numberOfLines = 0
         return cell
     }
     
@@ -48,10 +49,11 @@ class NewsTableViewController: UITableViewController {
 }
 
 extension NewsTableViewController: NetWorkViewControllerDelegate {
-    func didFetchdata(_ netWorkViewController: NetWorkViewController, data: NewsModel) {
+    func didFetchdata(_ netWorkViewController: NetWorkViewController, data: [News]) {
         DispatchQueue.main.async {
-            self.news = data.hits
+            self.news = data
             self.tableView.reloadData()
+            print(self.news.count)
         }
     }
 }
